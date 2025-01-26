@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import projects.exception.DbExeption;
+import projects.exception.DbException;
 
-public class DBConnection {
+public class DbConnection {
 	private static String HOST = "localhost";
 	private static String PASSWORD = "projects";
 	private static int PORT = 3306;
@@ -17,13 +17,15 @@ public class DBConnection {
 		String url = String.format("jdbc:mysql://%s:%d/%s?user=%s&password=%s&useSSL=false",
 		HOST,PORT,SCHEMA,USER,PASSWORD);
 				
-		try {
-			Connection conn = DriverManager.getConnection(url);
-			System.out.println("Connection is successful");
-			return conn;
-		} catch (SQLException e) {
-				throw new DbExeption(e);
-		}
+		 try {
+		      Connection conn = DriverManager.getConnection(url);
+		      System.out.println("Connection to schema '" + SCHEMA + "' is successful.");
+		      return conn;
+		    } catch (SQLException e) {
+		      System.out.println("Unable to get connection at " + url);
+		      throw new DbException("Unable to get connection at \" + uri");
+		    }
+
 	}
 	
 
